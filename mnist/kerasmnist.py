@@ -23,11 +23,9 @@ def load_data(path="MNIST_data/mnist.npz"):
 # 构建序贯模型
 def train():
     model = Sequential()
-    model.add(Dense(500,input_shape=(784,)))  # 输入层， 28*28=784
-    model.add(Activation('tanh'))
+    model.add(Dense(500,input_shape=(784,), activation="relu"))  # 输入层， 28*28=784
     model.add(Dropout(0.3))   # 30% dropout
-    model.add(Dense(300))  # 隐藏层， 300
-    model.add(Activation('tanh'))
+    model.add(Dense(300, activation="relu"))  # 隐藏层， 300
     model.add(Dropout(0.3))   # 30% dropout
     model.add(Dense(10))
     model.add(Activation('softmax'))
@@ -47,7 +45,7 @@ def run():
     Y_test = (np.arange(10) == y_test[:, None]).astype(int)
 
     model = train()
-    model.fit(X_train, Y_train, batch_size=200, epochs=1000, shuffle=True, verbose=1, validation_split=0.3)
+    model.fit(X_train, Y_train, batch_size=200, epochs=30, shuffle=True, verbose=1, validation_split=0.3)
     print("Start Test.....\n")
     scores = model.evaluate(X_test, Y_test, batch_size=200, verbose=1)
     print("The Test Loss: %f" % scores[0])
